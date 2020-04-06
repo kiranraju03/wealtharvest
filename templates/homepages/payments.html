@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+    .hide {
+        display: none;
+    }
+
+
+</style>
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                FreeDEBT
+            </h1>
+            <h2 class="subtitle">
+                Easy Savings, Better Living
+            </h2>
+        </div>
+
+    </div>
+    <div>
+        <form method="POST" action="/payments">
+            <div class="field">
+                <div class="control">
+                    <input class="input is-mobile is-rounded" name="amount" type="text" placeholder="Amount to be Paid">
+                </div>
+            </div>
+            <button class="button is-link is-inverted is-outlined">Proceed</button>
+        </form>
+    </div>
+
+    {% if num %}
+    <div id="changeViewer">
+        <h2 class="subtitle">
+            Do you wish to save {{ num }}?
+        </h2>
+
+        <div class="field is-grouped">
+            <p class="control">
+                <button class="button is-rounded">
+                    Accept
+                </button>
+            </p>
+            <p class="control">
+                <button class="button is-danger is-rounded">
+                    Decline
+                </button>
+            </p>
+        </div>
+
+        <div>
+            <button class="button is-link is-inverted is-outlined">Make Payment</button>
+        </div>
+
+    </div>
+    {% endif %}
+
+</section>
+
+<script>
+    function showAcceptDecline(){
+        document.getElementById('changeViewer').style.display = 'block';
+    }
+
+
+
+</script>
+{% endblock %}

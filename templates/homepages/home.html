@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="hero-body">
+        <div class="container is-fullhd">
+            <h2 class="subtitle">
+                Make Your Payments
+            </h2>
+            <a href="{{ url_for('main.payments') }}">
+                <button class="button is-medium is-outlined">
+                    Pay
+                </button>
+            </a>
+        </div>
+    </div>
+
+
+</section>
+{% endblock %}
