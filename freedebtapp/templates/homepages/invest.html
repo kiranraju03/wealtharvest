@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                Investment
+            </h1>
+<!--            <h3 class="subtitle">-->
+<!--                Invest Cards-->
+<!--            </h3>-->
+        </div>
+
+    </div>
+    <div class="tile is-ancestor">
+            <div class="tile is-parent">
+                <article class="tile is-child box">
+                    <div class="content is-vertical">
+                        <p>Mutual Fund Name</p><a href="#"><h5>{{ mutual_fund_name }}</h5></a>
+                        <p>Risk and Return Factor</p><a href="#"><h5>{{ risk_factor }} Risk, {{ risk_factor }} Returns</h5></a>
+                        <p>Interest Rate</p><a href="#"><h5>{{ return_value }}%</h5></a>
+                        <p>Minimum Amount To Be Invested</p><a href="#"><h5>{{ min_value }}</h5></a>
+                    </div>
+                </article>
+            </div>
+
+        </div>
+</section>
+{% endblock %}

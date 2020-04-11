@@ -1,0 +1,308 @@
+{% extends "surveypages/surveyLayout.html" %}
+
+{% block content %}
+
+<style>
+    .hide {
+        display: none;
+    }
+
+</style>
+
+<body class="hero">
+
+<div class="hero-body">
+
+    <div class="container is-fullhd">
+        <h2 class="subtitle">Help us understand better!</h2>
+        <h2 class="subtitle">
+            Please Share Your Personal Details
+        </h2>
+
+        <form method="POST" action="/survey">
+            <input id="takeemail" class="hide" name="takeemail" value="abc"/>
+            <!--            <p id="takeemail"></p>-->
+            <!--Occupation-->
+            <div class="field is-padding">
+                <label class="label">Profession Status</label>
+                <div class="control container has-text-centered is-padding">
+                    <label class="radio">
+                        <input type="radio" name="occupation" value="Student" checked>
+                        Student
+                        <figure class="image is-128x128">
+                            <img class="is-rounded" src="/static/images/student.png" alt="Student"/>
+                        </figure>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="occupation" value="Professional">
+                        Professional
+                        <figure class="image is-128x128">
+                            <img src="/static/images/working.png" alt="Working Professional"/>
+                        </figure>
+
+                    </label>
+                </div>
+            </div>
+
+            <!--Martial Status-->
+            <div class="field is-padding">
+                <label class="label">Martial Status</label>
+                <div class="control container has-text-centered is-padding">
+                    <label class="radio">
+                        <input type="radio" name="marital" value="Single" checked>
+                        Single
+                        <figure class="image is-128x128">
+                            <img class="is-rounded" src="/static/images/single.png" alt="Single"/>
+                        </figure>
+                    </label>
+                    <label class="radio">`
+                        <input type="radio" name="marital" value="Married">
+                        Married
+                        <figure class="image is-128x128">
+                            <img src="/static/images/married.png" alt="Married"/>
+                        </figure>
+
+                    </label>
+                </div>
+            </div>
+
+
+            <!--Education-->
+            <div class="field is-padding">
+                <label class="label">Education Qualification</label>
+                <div class="control container has-text-centered is-padding">
+                    <div class="select">
+                        <select id="sel" name="education">
+                            <option value="0">High School Diploma</option>
+                            <option value="1">Bachelor's Degree</option>
+                            <option value="2">Master's Degree</option>
+                            <option value="3">PhD Scholars</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NSEW -->
+            <div class="field is-padding">
+                <label class="label">Region</label>
+                <div class="control container has-text-centered is-padding">
+                    <label class="radio">
+                        <input type="radio" name="region" value="North">
+                        North
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="region" value="South" checked>
+                        South
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="region" value="East">
+                        East
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="region" value="West">
+                        West
+                    </label>
+                </div>
+            </div>
+            <br><br><br>
+
+            <!-- Monthly Salary -->
+            <div class="field is-padding">
+                <label class="label">Monthly Salary</label>
+                <div class="control container has-text-centered is-padding">
+                    <div class="select">
+                        <select name="salary">
+                            <option value=0> 0 - 5K</option>
+                            <option value=1> 5K - 10K</option>
+                            <option value=2> 10K - 30K</option>
+                            <option value=3> 30K - 50K</option>
+                            <option value=4> 50K - 70K</option>
+                            <option value=5> 70K - 1L</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!--                basic_data2['Monthly Spending'] = basic_data2['Monthly Spending'].map(-->
+            <!--                {'4000-7999': 2, '>12000': 4, '8000-11999': 3, '<4000': 1})-->
+            <!-- Monthly Expenditure -->
+            <div class="field is-padding">
+                <label class="label">Monthly Expenditure</label>
+                <div class="control container has-text-centered is-padding">
+                    <div class="select">
+                        <select name="expenses">
+                            <option value=1> 0 - 4K</option>
+                            <option value=2> 4K - 8K</option>
+                            <option value=3> 8K - 12K</option>
+                            <option value=4> >12K</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--               basic_data2['Monthly Savings'] = basic_data2['Monthly Savings'].map(-->
+            <!--               {'1000-2999': 2, 'No Savings': 0, '<1000': 1, '3000-4999': 3, '>5000': 4})-->
+            <!-- Monthly Savings -->
+            <div class="field is-padding">
+                <label class="label">Monthly Savings</label>
+                <div class="control container has-text-centered is-padding">
+                    <div class="select">
+                        <select name="savings">
+                            <option value=0> No Savings</option>
+                            <option value=1> 0 - 1K</option>
+                            <option value=2> 1K - 3K</option>
+                            <option value=3> 3K - 5K</option>
+                            <option value=4> >5K</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!--Goal Type-->
+            <div class="field">
+                <label class="label">Plans for saving on</label>
+                <div class="control container has-text-centered is-padding">
+                    <label class="radio">
+                        <input type="radio" name="goalname" value="Student Loan" onclick="showStudentElement();">
+                        Student Loan
+                        <figure class="image is-128x128">
+                            <img class="is-rounded" src="/static/images/university.png" alt="Student Loan"/>
+                        </figure>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="goalname" value="Personal Goal" onclick="showGoalElement();">
+                        Personal Goal
+                        <figure class="image is-128x128">
+                            <img class="is-rounded" src="/static/images/trophy.png" alt="Personal Goal"/>
+                        </figure>
+
+                    </label>
+                </div>
+            </div>
+
+
+            <!--Student loan form-->
+            <div id="studentloanform" class="hide">
+
+                <label class="label">Student Loan Details</label>
+                <div class="field">
+                    <label class="label">Loan Amount</label>
+                    <div class="control">
+                        <input class="input" name="loan_amt" type="number" placeholder="Loan Amount">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Interest Paid Per Annum</label>
+                    <div class="control">
+                        <input class="input" name="int_rate" type="number" placeholder="Interest Rate">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Loan Span(In Months)</label>
+                    <div class="control">
+                        <input class="input" name="loan_span" type="number" placeholder="Loan Span">
+                    </div>
+                </div>
+
+            </div>
+
+            <!--Personal Goal Form-->
+            <div id="personalgoalform" class="hide">
+
+                <label class="label">Personal Goal Details</label>
+                <div class="field">
+                    <label class="label">Goal Name</label>
+                    <div class="control">
+                        <input class="input" name="goal_name" type="text" placeholder="Goal Name">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Goal Amount</label>
+                    <div class="control">
+                        <input class="input" name="goal_amt" type="number" placeholder="Goal Amount">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Goal Time Span(In Months)</label>
+                    <div class="control">
+                        <input class="input" name="goal_span" type="number" placeholder="Goal Time Span">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <br/>
+            <div>
+                <button type="submit" id="signbutton" class="button is-info" onclick="refs.myModal.open()">Sign Up!
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal" id="myModal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+
+            <div class="tile is-ancestor">
+                <div class="tile is-parent">
+                    <article class="tile is-child box">
+                        <div class="content is-vertical">
+                            <h2>Creating your Recommendations, Please Wait</h2>
+                            <h2>"Great Savings Starts from Small Savings"</h2>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!--        </div>-->
+            <!--            -->
+            <!--            <h2 class="title has-text-centered has-text-weight-semibold has-text-white">-->
+            <!--                Creating your Recommendations, Please Wait.-->
+            <!--            </h2>-->
+            <!--            <h2 class="subtitle has-text-centered has-text-weight-semibold has-text-white">-->
+            <!--                "Great Savings Starts from Small Savings"-->
+            <!--            </h2>-->
+            <!--        </div>-->
+        </div>
+    </div>
+</body>
+
+
+<script>
+
+     var email = "" + `{{ email }}`
+     console.log(email);
+     document.getElementById('takeemail').value = email;
+
+     function showGoalElement(){
+        document.getElementById('personalgoalform').style.display = 'block';
+        document.getElementById('studentloanform').style.display = 'none';
+    }
+
+    function showStudentElement(){
+        document.getElementById('studentloanform').style.display = 'block';
+        document.getElementById('personalgoalform').style.display = 'none';
+    }
+
+    var refs = {
+        myModal: {
+            open: function() { document.getElementById('myModal').classList.add('is-active');
+            },
+            close:function() { document.getElementById('myModal').classList.remove('is-active');
+            }
+        }
+    };
+
+
+</script>
+
+</body>
+
+
+{% endblock %}

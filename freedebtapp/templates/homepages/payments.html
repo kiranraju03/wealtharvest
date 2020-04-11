@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+    .hide {
+        display: none;
+    }
+
+
+
+</style>
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                Wealtharvest
+            </h1>
+            <h2 class="subtitle">
+                Easy Savings, Better Living
+            </h2>
+        </div>
+
+    </div>
+    <div>
+        <form method="POST" action="/payments">
+            <div class="field">
+                <div class="control">
+                    <input class="input is-mobile is-rounded" name="amount" id="amountpaid" type="number" value="0"
+                           placeholder="Amount to be Paid">
+                </div>
+            </div>
+            <button class="button is-link is-inverted is-outlined">Proceed</button>
+        </form>
+    </div>
+    <br/><br/><br/>
+    {% if num %}
+    <div id="changeViewer">
+        <h2 class="subtitle">
+            Do you wish to save {{ num }}?
+        </h2>
+
+        <div class="field is-grouped">
+            <p class="control">
+                <button class="button is-rounded">
+                    <a href="{{ url_for('main.payments', bal=num) }}">Accept</a>
+                </button>
+            </p>
+            <p class="control">
+                <button class="button is-danger is-rounded">
+                    <a href="{{ url_for('main.payments') }}">Decline</a>
+                </button>
+            </p>
+        </div>
+
+        <div>
+            <button class="button is-link is-inverted is-outlined">Make Payment</button>
+        </div>
+
+    </div>
+    {% endif %}
+
+</section>
+
+<script>
+
+    var amt_value = ""  + `{{ amt }}`
+    console.log(amt_value);
+    document.getElementById('amountpaid').value = amt_value;
+
+    function showAcceptDecline(){
+        document.getElementById('changeViewer').style.display = 'block';
+    }
+
+    function saveAmount(){
+        change_amt = `{{ num }}`
+
+    }
+
+
+</script>
+{% endblock %}

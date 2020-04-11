@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1 class="title">
+    My Wallet
+</h1>
+<body class="hero">
+
+<div class="hero-body">
+    <div class="container is-fullhd">
+        <h2 class="subtitle">
+            Balance
+        </h2>
+        <h2 class="subtitle">
+            ₹ {{ wallet_balance }}
+        </h2>
+        <a href="{{ url_for('main.invest') }}">
+            <button class="button is-medium is-outlined">
+                Invest
+            </button>
+        </a>
+    </div>
+
+</div>
+<div class="field is-grouped">
+    <p class="control">
+        <button class="button is-rounded">
+            Saving Boosts
+        </button>
+    </p>
+    <p class="control">
+        <button class="button is-danger is-rounded">
+            Pause Transfers
+        </button>
+    </p>
+</div>
+</body>
+
+{% endblock %}

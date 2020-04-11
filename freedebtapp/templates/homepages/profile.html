@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1 class="title">
+    Welcome, {{ current_user.name }}!
+</h1>
+<body class="hero">
+
+<div class="hero-body">
+    <div class="container is-fullhd">
+        <h2 class="subtitle">
+            Your Personal Details
+        </h2>
+        <div class="has-text-justified has-text-light is-size-4">
+                <p>User Name              : {{ name }}</p>
+                <p>Email                  : {{ email }}</p>
+                <p>Occupation             : {{ occupation }}</p>
+                <p>Martial Status         : {{ martial }}</p>
+                <p>Region                 : {{ region }}</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
