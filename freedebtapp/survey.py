@@ -3,6 +3,10 @@ import numpy as np
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from .models import UserPersonalDetails, Wallet
 from . import db
+import os
+
+dirname = os.path.dirname(__file__)
+
 
 # from flask_login import login_required, current_user
 
@@ -86,8 +90,10 @@ def surveyPost():
 
     collective_values = [occupation, savings, expense] + regionEncoded
 
-    with open(r"C:\Users\ravi\Documents\flaskFrontEnd\freedebtWeb\resources\basicclusterpicklefiles\B_Clust_PIK_0.p",
-              "rb") as f:
+    filename = os.path.join(dirname, 'resources/basicclusterpicklefiles/B_Clust_PIK_0.p')
+    # with open("./resources/basicclusterpicklefiles/B_Clust_PIK_0.p",
+    #           "rb") as f:
+    with open(filename, "rb") as f:
         n_km = pickle.load(f)
 
     cluster = int(n_km.predict(np.array(collective_values).reshape(1, -1))[0])
@@ -95,8 +101,12 @@ def surveyPost():
     print(type(cluster))
     print(cluster)
 
-    with open(r"C:\Users\ravi\Documents\flaskFrontEnd\freedebtWeb\resources\basicclusterpicklefiles\PIK_" + str(
-            cluster) + ".p", "rb") as f:
+    filename1 = os.path.join(dirname, 'resources/basicclusterpicklefiles/PIK_' + str(
+            cluster) + ".p")
+
+    # with open("./resources/basicclusterpicklefiles/PIK_" + str(
+    #         cluster) + ".p", "rb") as f:
+    with open(filename1, "rb") as f:
         n_sc = pickle.load(f)
         n_data = pickle.load(f)
         n_m0 = pickle.load(f)
@@ -105,8 +115,12 @@ def surveyPost():
     print("Amount")
     print(amount)
 
-    with open(r"C:\Users\ravi\Documents\flaskFrontEnd\freedebtWeb\resources\basicclusterpicklefiles\NUM_PIK_" + str(
-            cluster) + ".p", "rb") as f:
+    filename2 = os.path.join(dirname, 'resources/basicclusterpicklefiles/NUM_PIK_' + str(
+        cluster) + ".p")
+
+    # with open("./resources/basicclusterpicklefiles/NUM_PIK_" + str(
+    #         cluster) + ".p", "rb") as f:
+    with open(filename2, "rb") as f:
         n_sc = pickle.load(f)
         n_data = pickle.load(f)
         n_m0 = pickle.load(f)
