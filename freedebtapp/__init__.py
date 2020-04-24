@@ -53,8 +53,3 @@ def create_app():
     return app
 
 
-jdbc:sqlserver://wealtharvest.database.windows.net:1433;database=wealtharvestdb;user=wealthadmin@wealtharvest;password={your_password_here};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
-
-Driver={ODBC Driver 13 for SQL Server};Server=tcp:wealtharvest.database.windows.net,1433;Database=wealtharvestdb;Uid=wealthadmin;Pwd={your_password_here};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;
-
-Server=tcp:wealtharvest.database.windows.net,1433;Initial Catalog=wealtharvestdb;Persist Security Info=False;User ID=wealthadmin;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
