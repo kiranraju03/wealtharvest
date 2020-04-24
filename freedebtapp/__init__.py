@@ -16,7 +16,9 @@ def create_app():
     # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://wealthadmin:freeDebt#357@wealtharvest.database.windows.net:1433/wealtharvestdb'
     # app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pymssql://wealthadmin:freeDebt#357@wealtharvest.database.windows.net:1433/wealtharvestdb'
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://wealthadmin:freeDebt#357@wealtharvest.database.windows.net:1433/wealtharvestdb?driver=SQL+Server+Native+Client+11.0'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://wealthadmin:freeDebt#357@wealtharvest.database.windows.net:1433/wealtharvestdb?driver=SQL+Server+Native+Client+11.0'
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://wealthadmin:freeDebt#357@wealtharvest.database.windows.net:1433/wealtharvestdb?driver=/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.5.so.2.1'
 
     db.init_app(app)
 
@@ -49,3 +51,10 @@ def create_app():
     app.register_blueprint(survey_blueprint)
 
     return app
+
+
+jdbc:sqlserver://wealtharvest.database.windows.net:1433;database=wealtharvestdb;user=wealthadmin@wealtharvest;password={your_password_here};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+
+Driver={ODBC Driver 13 for SQL Server};Server=tcp:wealtharvest.database.windows.net,1433;Database=wealtharvestdb;Uid=wealthadmin;Pwd={your_password_here};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;
+
+Server=tcp:wealtharvest.database.windows.net,1433;Initial Catalog=wealtharvestdb;Persist Security Info=False;User ID=wealthadmin;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
