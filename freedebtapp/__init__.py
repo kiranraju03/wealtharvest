@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+# import MySQLdb
 
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
@@ -10,7 +11,12 @@ def create_app():
     app = Flask(__name__)
 
     app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iuopO'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    # 'mysql://wealthadmin:freeDebt#357@wealtharvest/wealtharvestdb'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://wealthadmin:freeDebt#357@wealtharvest.database.windows.net:1433/wealtharvestdb'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pymssql://wealthadmin:freeDebt#357@wealtharvest.database.windows.net:1433/wealtharvestdb'
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://wealthadmin:freeDebt#357@wealtharvest.database.windows.net:1433/wealtharvestdb?driver=SQL+Server+Native+Client+11.0'
 
     db.init_app(app)
 

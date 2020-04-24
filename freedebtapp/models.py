@@ -5,9 +5,9 @@ from flask_login import UserMixin
 
 
 class User(UserMixin, db.Model):
-    __tablename__ = 'user'
+    __tablename__ = 'user_wh'
     id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
-    email = db.Column(db.String, unique=True)
+    email = db.Column(db.String(30), unique=True)
     password = db.Column(db.String)
     name = db.Column(db.String(20))
 
@@ -15,10 +15,12 @@ class UserPersonalDetails(db.Model):
     __tablename__ = 'user_personal_details'
     id = db.Column(db.Integer, primary_key=True)  # primary keys are required by SQLAlchemy
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # user_id = db.Column(db.Integer, db.ForeignKey('user_wh.id'))
+    # request = db.relationship("User", backref=backref("user_personal_details", uselist=False))
+
+    email = db.Column(db.String(30), db.ForeignKey('user_wh.email'))
     request = db.relationship("User", backref=backref("user_personal_details", uselist=False))
 
-    email = db.Column(db.String(30))
     occupation = db.Column(db.Integer)
     martial_status = db.Column(db.String(20))
     education = db.Column(db.String(20))
@@ -55,7 +57,6 @@ class Wallet(db.Model):
     transaction_amt = db.Column(db.Integer)
     created_on = db.Column(db.DateTime, server_default=db.func.now())
     # updated_on = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
-
 
 
 

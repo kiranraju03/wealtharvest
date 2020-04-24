@@ -83,7 +83,7 @@ def paymentsPost():
     print(cdc)
 
     # compute the change
-    return render_template('homepages/payments.html', amt=entered_amt, num=int(cdc))
+    return render_template('homepages/payments.html', amt=entered_amt, num=max(int(cdc), 1))
 
 
 @main.route('/profile')
