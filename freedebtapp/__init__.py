@@ -18,7 +18,9 @@ def create_app():
 
     # app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://wealthadmin:freeDebt#357@wealtharvest.database.windows.net:1433/wealtharvestdb?driver=SQL+Server+Native+Client+11.0'
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://wealthadmin:freeDebt#357@wealtharvest.database.windows.net:1433/wealtharvestdb?driver=ODBC Driver 17 for SQL Server'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://wealthadmin:freeDebt#357@wealtharvest.database.windows.net:1433/wealtharvestdb?driver=ODBC Driver 17 for SQL Server'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://whadmin:whAdmin#259@wealtharvestdb.cywfuhiwzizr.us-east-2.rds' \
+                                            '.amazonaws.com:3306/wealtharvestdb'
 
     db.init_app(app)
 
