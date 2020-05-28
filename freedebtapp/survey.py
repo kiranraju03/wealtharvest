@@ -1,16 +1,77 @@
-import pickle
-import numpy as np
-from flask import Blueprint, render_template, redirect, url_for, request, flash
-from .models import UserPersonalDetails, Wallet
-from . import db
 import os
+import pickle
+
+import numpy as np
+from flask import Blueprint, render_template, redirect, url_for, request, jsonify, make_response
+
+from . import db
+from .models import UserPersonalDetails, Wallet, Predictions
 
 dirname = os.path.dirname(__file__)
 
+filename = os.path.join(dirname, 'resources/basicclusterpicklefiles/B_Clust_PIK_0.p')
+# with open("./resources/basicclusterpicklefiles/B_Clust_PIK_0.p",
+#           "rb") as f:
+with open(filename, "rb") as f:
+    n_km = pickle.load(f)
 
 # from flask_login import login_required, current_user
 
 survey_blu = Blueprint('survey_blu', __name__)
+
+
+@survey_blu.route('/predictions')
+def predictions():
+    for cluster in range(3):
+        filename1 = os.path.join(dirname, 'resources/basicclusterpicklefiles/PIK_' + str(
+            cluster) + ".p")
+
+        # with open("./resources/basicclusterpicklefiles/PIK_" + str(
+        #         cluster) + ".p", "rb") as f:
+        with open(filename1, "rb") as f:
+            n_sc = pickle.load(f)
+
+            n_data = pickle.load(f)
+            n_m0 = pickle.load(f)
+        amount = n_sc.inverse_transform(n_m0.predict(np.reshape(n_data, (n_data.shape[0], 1, n_data.shape[1]))))[0][0]
+        # invert predictions : AMOUNT PREDICTION
+        print("Amount")
+        print(amount)
+
+        filename2 = os.path.join(dirname, 'resources/basicclusterpicklefiles/NUM_PIK_' + str(
+            cluster) + ".p")
+
+        with open(filename2, "rb") as f:
+            n_sc = pickle.load(f)
+            n_data = pickle.load(f)
+            n_m0 = pickle.load(f)
+
+        transaction = \
+        n_sc.inverse_transform(n_m0.predict(np.reshape(n_data, (n_data.shape[0], 1, n_data.shape[1]))))[0][0]
+        # invert predictions : TRANSACTION PREDICTION
+        print("transaction")
+        transaction_value = int(transaction)
+        print(transaction_value)
+
+        # Saved per day per transaction
+        # save_per_transaction = save_per_day / transaction_value
+        # Amount per transaction
+        # amount_per_transaction = amount / transaction_value
+
+        """INsert to Table"""
+        prediction_value = Predictions(cluster=cluster,
+                                       transaction_value=transaction_value,
+                                       predicted_value=amount,
+                                       amount_per_transaction=amount / transaction_value)
+
+        db.session.add(prediction_value)
+        db.session.commit()
+
+    data = {'message': 'Prediction Completed', 'code': 'SUCCESS'}
+
+    return make_response(jsonify(data), 200)
+
+    # return Response()
 
 
 @survey_blu.route('/survey')
@@ -90,56 +151,50 @@ def surveyPost():
 
     collective_values = [occupation, savings, expense] + regionEncoded
 
-    filename = os.path.join(dirname, 'resources/basicclusterpicklefiles/B_Clust_PIK_0.p')
-    # with open("./resources/basicclusterpicklefiles/B_Clust_PIK_0.p",
-    #           "rb") as f:
-    with open(filename, "rb") as f:
-        n_km = pickle.load(f)
-
     cluster = int(n_km.predict(np.array(collective_values).reshape(1, -1))[0])
     print("New cluster value : ")
     print(type(cluster))
     print(cluster)
 
-    filename1 = os.path.join(dirname, 'resources/basicclusterpicklefiles/PIK_' + str(
-            cluster) + ".p")
+    # filename1 = os.path.join(dirname, 'resources/basicclusterpicklefiles/PIK_' + str(
+    #         cluster) + ".p")
+    #
+    # # with open("./resources/basicclusterpicklefiles/PIK_" + str(
+    # #         cluster) + ".p", "rb") as f:
+    # with open(filename1, "rb") as f:
+    #     n_sc = pickle.load(f)
+    #     n_data = pickle.load(f)
+    #     n_m0 = pickle.load(f)
+    # amount = n_sc.inverse_transform(n_m0.predict(np.reshape(n_data, (n_data.shape[0], 1, n_data.shape[1]))))[0][0]
+    # # invert predictions : AMOUNT PREDICTION
+    # print("Amount")
+    # print(amount)
 
-    # with open("./resources/basicclusterpicklefiles/PIK_" + str(
-    #         cluster) + ".p", "rb") as f:
-    with open(filename1, "rb") as f:
-        n_sc = pickle.load(f)
-        n_data = pickle.load(f)
-        n_m0 = pickle.load(f)
-    amount = n_sc.inverse_transform(n_m0.predict(np.reshape(n_data, (n_data.shape[0], 1, n_data.shape[1]))))[0][0]
-    # invert predictions
-    print("Amount")
-    print(amount)
-
-    filename2 = os.path.join(dirname, 'resources/basicclusterpicklefiles/NUM_PIK_' + str(
-        cluster) + ".p")
-
-    # with open("./resources/basicclusterpicklefiles/NUM_PIK_" + str(
-    #         cluster) + ".p", "rb") as f:
-    with open(filename2, "rb") as f:
-        n_sc = pickle.load(f)
-        n_data = pickle.load(f)
-        n_m0 = pickle.load(f)
-
-    transaction = n_sc.inverse_transform(n_m0.predict(np.reshape(n_data, (n_data.shape[0], 1, n_data.shape[1]))))[0][0]
-    # invert predictions
-    print("transaction")
-    transaction_value = int(transaction)
-    print(transaction_value)
+    # filename2 = os.path.join(dirname, 'resources/basicclusterpicklefiles/NUM_PIK_' + str(
+    #     cluster) + ".p")
+    #
+    # # with open("./resources/basicclusterpicklefiles/NUM_PIK_" + str(
+    # #         cluster) + ".p", "rb") as f:
+    # with open(filename2, "rb") as f:
+    #     n_sc = pickle.load(f)
+    #     n_data = pickle.load(f)
+    #     n_m0 = pickle.load(f)
+    #
+    # transaction = n_sc.inverse_transform(n_m0.predict(np.reshape(n_data, (n_data.shape[0], 1, n_data.shape[1]))))[0][0]
+    # # invert predictions : TRANSACTION PREDICTION
+    # print("transaction")
+    # transaction_value = int(transaction)
+    # print(transaction_value)
 
     # Saved per day per transaction
-    save_per_transaction = save_per_day / transaction_value
-    # Amount per transaction
-    amount_per_transaction = amount / transaction_value
-
-    predicted_value = 2 * (save_per_transaction * amount_per_transaction) / (
-            save_per_transaction + amount_per_transaction)
-
-    print("Predicted Value " + str(predicted_value))
+    # save_per_transaction = save_per_day / transaction_value
+    # # Amount per transaction
+    # amount_per_transaction = amount / transaction_value
+    #
+    # predicted_value = 2 * (save_per_transaction * amount_per_transaction) / (
+    #         save_per_transaction + amount_per_transaction)
+    #
+    # print("Predicted Value " + str(predicted_value))
 
     userpersonaldetails = UserPersonalDetails(occupation=occupation,
                                               martial_status=martial_status,
@@ -156,12 +211,11 @@ def surveyPost():
                                               amt_value=goal_amt,
                                               goal_span=goal_span,
                                               save_per_day=save_per_day,
-                                              transaction_value=transaction_value,
-                                              amount_per_transaction=amount_per_transaction,
-                                              predicted_value=predicted_value,
+                                              # transaction_value=transaction_value,
+                                              # amount_per_transaction=amount_per_transaction,
+                                              # predicted_value=predicted_value,
                                               email=email_id,
                                               cluster=cluster)
-
     db_wallet = Wallet(email=email_id, transaction_amt=0)
     db.session.add(db_wallet)
 
@@ -169,6 +223,3 @@ def surveyPost():
     db.session.commit()
 
     return redirect(url_for('authorize.login'))
-
-
-

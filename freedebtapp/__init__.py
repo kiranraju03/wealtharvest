@@ -12,15 +12,15 @@ def create_app():
 
     app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iuopO'
     # 'mysql://wealthadmin:freeDebt#357@wealtharvest/wealtharvestdb'
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
     # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://wealthadmin:freeDebt#357@wealtharvest.database.windows.net:1433/wealtharvestdb'
     # app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pymssql://wealthadmin:freeDebt#357@wealtharvest.database.windows.net:1433/wealtharvestdb'
 
     # app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://wealthadmin:freeDebt#357@wealtharvest.database.windows.net:1433/wealtharvestdb?driver=SQL+Server+Native+Client+11.0'
 
     # app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://wealthadmin:freeDebt#357@wealtharvest.database.windows.net:1433/wealtharvestdb?driver=ODBC Driver 17 for SQL Server'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://whadmin:whAdmin#259@wealtharvestdb.cywfuhiwzizr.us-east-2.rds' \
-                                            '.amazonaws.com:3306/wealtharvestdb'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://whadmin:whAdmin#259@wealtharvestdb.cywfuhiwzizr.us-east-2.rds' \
+    #                                         '.amazonaws.com:3306/wealtharvestdb'
 
     db.init_app(app)
 

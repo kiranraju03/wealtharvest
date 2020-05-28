@@ -1,3 +1,5 @@
+import json
+
 from flask import Blueprint, render_template, url_for, redirect, request
 from .models import User, UserPersonalDetails, Wallet
 from . import db
@@ -56,34 +58,43 @@ def wallet():
 
 @main.route('/payments')
 def payments():
-    bal_value = request.args.get('bal', type=int)
-    if bal_value:
-        email = current_user.email
-        db_wallet = Wallet(
-            email=email,
-            transaction_amt=bal_value,
-        )
-        db.session.add(db_wallet)
-        db.session.commit()
-        print("payamt " + str(bal_value))
+    # bal_value = request.args.get('bal', type=int)
+    # if bal_value:
+    #     email = current_user.email
+    #     db_wallet = Wallet(
+    #         email=email,
+    #         transaction_amt=bal_value,
+    #     )
+    #     db.session.add(db_wallet)
+    #     db.session.commit()
+    #     print("payamt " + str(bal_value))
 
     return render_template('homepages/payments.html')
 
 
-@main.route('/payments', methods=['POST'])
-def paymentsPost():
+# @main.route('/payments', methods=['POST'])
+# def paymentsPost():
+#     entered_amt = request.form.get('amount')
+#     comp_amt = int(entered_amt) / 4
+#
+#     user_specific = db.session.query(UserPersonalDetails).filter(UserPersonalDetails.email == current_user.email).all()
+#     # .user_values = user_specific
+#     pdv = user_specific[0].predicted_value
+#     print(pdv)
+#     cdc = 2 * (comp_amt * pdv) / (comp_amt + pdv)
+#     print(cdc)
+#
+#     # compute the change
+#     return render_template('homepages/payments.html', amt=entered_amt, num=max(int(cdc), 1))
+
+@main.route('/paymentsAjax')
+def paymentsAjax():
+
     entered_amt = request.form.get('amount')
-    comp_amt = int(entered_amt) / 4
+    print("AJAX PRINTED")
+    print(entered_amt)
 
-    user_specific = db.session.query(UserPersonalDetails).filter(UserPersonalDetails.email == current_user.email).all()
-    # .user_values = user_specific
-    pdv = user_specific[0].predicted_value
-    print(pdv)
-    cdc = 2 * (comp_amt * pdv) / (comp_amt + pdv)
-    print(cdc)
-
-    # compute the change
-    return render_template('homepages/payments.html', amt=entered_amt, num=max(int(cdc), 1))
+    return json.dumps({'status': 'OK', 'user': "user", 'pass': "password"})
 
 
 @main.route('/profile')

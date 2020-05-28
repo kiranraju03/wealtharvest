@@ -42,17 +42,36 @@ class UserPersonalDetails(db.Model):
 
     save_per_day = db.Column(db.Float)
 
-    transaction_value = db.Column(db.Integer)
-    amount_per_transaction = db.Column(db.Float)
-    predicted_value = db.Column(db.Float)
+    # Moving from survey to payments
+    # transaction_value = db.Column(db.Integer)
+    # amount_per_transaction = db.Column(db.Float)
+    # predicted_value = db.Column(db.Float)
 
     cluster = db.Column(db.Integer)
+
+
+# Called as a cron job each day.
+class Predictions(db.Model):
+    __tablename__ = 'predictions'
+    id = db.Column(db.Integer, primary_key=True)
+    cluster = db.Column(db.Integer)
+    transaction_value = db.Column(db.Integer)
+    predicted_value = db.Column(db.Float)
+    amount_per_transaction = db.Column(db.Float)
+    created_on = db.Column(db.DateTime, server_default=db.func.now())
+
+
+class Transactions(db.Model):
+    __tablename__ = 'transactions'
+    id = db.Column(db.Integer, primary_key=True)  # primary keys are required by SQLAlchemy
+    email = db.Column(db.String(30))
+    transaction_amt = db.Column(db.Integer)
+    created_on = db.Column(db.DateTime, server_default=db.func.now())
 
 
 class Wallet(db.Model):
     __tablename__ = 'wallet'
     id = db.Column(db.Integer, primary_key=True)  # primary keys are required by SQLAlchemy
-
     email = db.Column(db.String(30))
     transaction_amt = db.Column(db.Integer)
     created_on = db.Column(db.DateTime, server_default=db.func.now())
