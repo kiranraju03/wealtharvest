@@ -3,7 +3,7 @@ import json
 
 from flask import Blueprint, render_template, jsonify, make_response, request
 from flask_login import current_user
-from sqlalchemy import func
+from sqlalchemy import func, DATE
 
 from freedebtapp import db
 from freedebtapp.models import Wallet, UserPersonalDetails, Predictions, Transactions
@@ -38,12 +38,22 @@ def paymentsAjax():
     pickedTupleValues = pickColumns[0][1:]
     print(pickedTupleValues)
 
+    # transactionDetails = db.session.query(func.sum(Transactions.transaction_amt).label('total'),
+    #                                       func.count(Transactions.transaction_amt).label('count')).filter(
+    #     Transactions.email == user_email).filter(func.date(Transactions.created_on) == datetime.date.today())
+
     transactionDetails = db.session.query(func.sum(Transactions.transaction_amt).label('total'),
                                           func.count(Transactions.transaction_amt).label('count')).filter(
-        Transactions.email == user_email).filter(func.date(Transactions.created_on) == datetime.date.today())
+        Transactions.email == user_email).filter(func.cast(Transactions.created_on, DATE) == datetime.date.today())
+
+    # per_amt = transactionDetails.group_by(Transactions.email,
+    #                                       func.date(Transactions.created_on).label('day_wise')).order_by(
+    #     func.date(Transactions.created_on).desc()).all()
+
     per_amt = transactionDetails.group_by(Transactions.email,
-                                          func.date(Transactions.created_on).label('day_wise')).order_by(
-        func.date(Transactions.created_on).desc()).all()
+                                          func.cast(Transactions.created_on, DATE).label('day_wise')).order_by(
+        func.cast(Transactions.created_on, DATE).desc()).all()
+
     print("Ordered")
     if len(per_amt) > 0:
         per_amt = per_amt[0]
