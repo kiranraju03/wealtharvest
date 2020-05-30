@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                <p>Hello, {{ name }}</p>
+            </h1>
+<!--            <h3 class="subtitle">-->
+<!--                Invest Cards-->
+<!--            </h3>-->
+        </div>
+
+    </div>
+
+    <div class="tile is-ancestor">
+            <div class="tile is-parent">
+                <article class="tile is-child box">
+                    <div class="content is-centered">
+                        <h3>Selected Goals</h3>
+                        {% if getGoal == "Student Loan" %}
+                        <h3>Student Loan</h3>
+                        <h4>{{ goalSet['amount'] }}</h4>
+                        <h4>{{ goalSet['int_val'] }}%</h4>
+                        <h4>{{ goalSet['timeSpan'] }} months</h4>
+                        {% else %}
+                        <h3>{{ goalSet['goalName'] }}</h3>
+                        <h4>{{ goalSet['goalAmt'] }}</h4>
+                        <h4>{{ goalSet['goalSpan'] }} months</h4>
+                        {% endif %}
+                    </div>
+                </article>
+            </div>
+            <div class="tile is-parent">
+                <article class="tile is-child box">
+                    <div class="content">
+                        <h3>Wallet Balance</h3>
+                        <h2>₹ {{ wallet_balance }}</h2>
+                    </div>
+                </article>
+            </div>
+            <div class="tile is-parent">
+                <article class="tile is-child box">
+                    <div class="content">
+                        <h3>Investments</h3>
+                        {% if invest_flag %}
+                        <h4>You haven't invested yet</h4>
+                        <h4>Don't be left behind!</h4>
+                        <button class="button is-link is-inverted is-outlined"><a href="{{ url_for('investment.invest') }}">Invest Now</a></button>
+                        {% else %}
+                        <h2>Show selected investments</h2>
+                        {% endif %}
+
+                    </div>
+                </article>
+            </div>
+        </div>
+</section>
+
+{% endblock %}

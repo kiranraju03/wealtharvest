@@ -26,7 +26,7 @@ def loginPost():
 
     login_user(user, remember=remember)
 
-    return redirect(url_for('main.profile'))
+    return redirect(url_for('dashboards.dashboard'))
 
 
 @authorize.route('/signup')
@@ -53,10 +53,11 @@ def signup_post():
     # add the new user to the database
     db.session.add(new_user)
     db.session.commit()
-
-    # redirect(url_for('survey_blu.survey'))
+    login_user(new_user, remember=True)
+    # redirect(url_for('survey_blu.survey')
     # return redirect(url_for('survey_blu.survey'))
-    return render_template('surveypages/survey.html', email=email)
+    return redirect(url_for('surveys.survey', email=email))
+    # return render_template('surveypages/survey.html', email=email)
 
 
 @authorize.route('/logout')

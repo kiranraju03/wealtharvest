@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>-->
+    <!--IMport the jqery file-->
+    <script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+<!--    <script type=text/javascript src="{{url_for('static', filename='payments.js') }}"></script>-->
+    <script type=text/javascript src="../../static/js/payments.js"></script>
+</head>
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                Payments
+            </h1>
+        </div>
+
+    </div>
+    <div>
+        <form>
+                    <div class="field">
+                        <div class="control">
+                            <input class="input is-mobile is-rounded" name="amount" id="amountpaid" type="number"
+                                   placeholder="Amount to be Paid">
+                        </div>
+                    </div>
+                    <h2 id="postTransactionMessage"></h2>
+                    <button id="proceed" class="button is-link is-inverted is-outlined">Proceed</button>
+                </form>
+        <div id="addmore"></div>
+    </div>
+</section>
+
+{% endblock %}

@@ -11,8 +11,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -27,6 +27,13 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Kiran Projects\WalletBug\freedebtapp_fixed_wallet\freedebtapp\templates\homepages" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Kiran Projects\WalletBug\freedebtapp_fixed_wallet\freedebtapp\templates\staticpages" />
+      <recent name="C:\Kiran Projects\WalletBug\freedebtapp_fixed_wallet\freedebtapp\static\js" />
+      <recent name="C:\Kiran Projects\WalletBug\freedebtapp_fixed_wallet\freedebtapp\blueprints\survey" />
+      <recent name="C:\Kiran Projects\WalletBug\freedebtapp_fixed_wallet\freedebtapp\blueprints\payments" />
+      <recent name="C:\Kiran Projects\WalletBug\freedebtapp_fixed_wallet\freedebtapp\blueprints\staticpages" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -53,6 +60,10 @@
       <updated>1586615064276</updated>
     </task>
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.js" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.css" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

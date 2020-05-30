@@ -8,8 +8,9 @@ class User(UserMixin, db.Model):
     __tablename__ = 'user_wh'
     id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
     email = db.Column(db.String(30), unique=True)
-    password = db.Column(db.String(20))
+    password = db.Column(db.String)
     name = db.Column(db.String(20))
+
 
 class UserPersonalDetails(db.Model):
     __tablename__ = 'user_personal_details'

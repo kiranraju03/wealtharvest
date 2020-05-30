@@ -10,17 +10,11 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
 
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
     app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iuopO'
-    # 'mysql://wealthadmin:freeDebt#357@wealtharvest/wealtharvestdb'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://wealthadmin:freeDebt#357@wealtharvest.database.windows.net:1433/wealtharvestdb'
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pymssql://wealthadmin:freeDebt#357@wealtharvest.database.windows.net:1433/wealtharvestdb'
 
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://wealthadmin:freeDebt#357@wealtharvest.database.windows.net:1433/wealtharvestdb?driver=SQL+Server+Native+Client+11.0'
-
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://wealthadmin:freeDebt#357@wealtharvest.database.windows.net:1433/wealtharvestdb?driver=ODBC Driver 17 for SQL Server'
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://whadmin:whAdmin#259@wealtharvestdb.cywfuhiwzizr.us-east-2.rds' \
-    #                                         '.amazonaws.com:3306/wealtharvestdb'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://whadmin:Password123#@wealthharvest.database.windows.net:1433/wealthharvest?driver=ODBC Driver 17 for SQL Server'
 
     db.init_app(app)
 
@@ -42,15 +36,30 @@ def create_app():
         return None
 
     # blueprint for authorize routes in our app
-    from .authorize import authorize as auth_blueprint
+    from freedebtapp.blueprints.authorize import authorize as auth_blueprint
     app.register_blueprint(auth_blueprint.authorize)
 
     # blueprint for non-authorize parts of app
-    from .main import main as main_blueprint
-    app.register_blueprint(main_blueprint)
+    from freedebtapp.blueprints.staticpages import static as static_blueprint
+    app.register_blueprint(static_blueprint.main)
 
-    from .survey import survey_blu as survey_blueprint
-    app.register_blueprint(survey_blueprint)
+    from freedebtapp.blueprints.payments import payments as payments_blueprint
+    app.register_blueprint(payments_blueprint.payment)
+
+    from freedebtapp.blueprints.survey import survey as survey_blueprint
+    app.register_blueprint(survey_blueprint.surveys)
+
+    from freedebtapp.blueprints.investments import invest as invest_blueprint
+    app.register_blueprint(invest_blueprint.investment)
+
+    from freedebtapp.blueprints.wallet import wallet as wallet_blueprint
+    app.register_blueprint(wallet_blueprint.wallets)
+
+    from freedebtapp.blueprints.profile import profile as profile_blueprint
+    app.register_blueprint(profile_blueprint.profiles)
+
+    from freedebtapp.blueprints.dashboard import dashboard as dashboard_blueprint
+    app.register_blueprint(dashboard_blueprint.dashboards)
 
     return app
 

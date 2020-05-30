@@ -3,13 +3,14 @@ import pickle
 
 import numpy as np
 from flask import Blueprint, render_template, redirect, url_for, request, jsonify, make_response
+from flask_login import current_user
 
-from . import db
-from .models import UserPersonalDetails, Wallet, Predictions
+from freedebtapp import db
+from freedebtapp.models import UserPersonalDetails, Wallet, Predictions
 
 dirname = os.path.dirname(__file__)
 
-filename = os.path.join(dirname, 'resources/basicclusterpicklefiles/B_Clust_PIK_0.p')
+filename = os.path.join(dirname, '../../resources/basicclusterpicklefiles/B_Clust_PIK_0.p')
 # with open("./resources/basicclusterpicklefiles/B_Clust_PIK_0.p",
 #           "rb") as f:
 with open(filename, "rb") as f:
@@ -17,13 +18,13 @@ with open(filename, "rb") as f:
 
 # from flask_login import login_required, current_user
 
-survey_blu = Blueprint('survey_blu', __name__)
+surveys = Blueprint('surveys', __name__)
 
 
-@survey_blu.route('/predictions')
+@surveys.route('/predictions')
 def predictions():
     for cluster in range(3):
-        filename1 = os.path.join(dirname, 'resources/basicclusterpicklefiles/PIK_' + str(
+        filename1 = os.path.join(dirname, '../../resources/basicclusterpicklefiles/PIK_' + str(
             cluster) + ".p")
 
         # with open("./resources/basicclusterpicklefiles/PIK_" + str(
@@ -36,9 +37,10 @@ def predictions():
         amount = n_sc.inverse_transform(n_m0.predict(np.reshape(n_data, (n_data.shape[0], 1, n_data.shape[1]))))[0][0]
         # invert predictions : AMOUNT PREDICTION
         print("Amount")
-        print(amount)
-
-        filename2 = os.path.join(dirname, 'resources/basicclusterpicklefiles/NUM_PIK_' + str(
+        print(type(amount))
+        amount = float(amount)
+        print(type(amount))
+        filename2 = os.path.join(dirname, '../../resources/basicclusterpicklefiles/NUM_PIK_' + str(
             cluster) + ".p")
 
         with open(filename2, "rb") as f:
@@ -58,7 +60,7 @@ def predictions():
         # Amount per transaction
         # amount_per_transaction = amount / transaction_value
 
-        """INsert to Table"""
+        """Insert to Table"""
         prediction_value = Predictions(cluster=cluster,
                                        transaction_value=transaction_value,
                                        predicted_value=amount,
@@ -74,14 +76,14 @@ def predictions():
     # return Response()
 
 
-@survey_blu.route('/survey')
+@surveys.route('/survey')
 def survey():
     return render_template('surveypages/survey.html')
 
 
-@survey_blu.route('/survey', methods=['POST'])
+@surveys.route('/survey', methods=['POST'])
 def surveyPost():
-    email_id = request.form['takeemail']
+    email_id = current_user.email
     print("EMAIL : " + email_id)
 
     occupation = request.form['occupation']
@@ -222,4 +224,4 @@ def surveyPost():
     db.session.add(userpersonaldetails)
     db.session.commit()
 
-    return redirect(url_for('authorize.login'))
+    return redirect(url_for('dashboards.dashboard'))

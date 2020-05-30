@@ -55,7 +55,7 @@
                             <img class="is-rounded" src="/static/images/single.png" alt="Single"/>
                         </figure>
                     </label>
-                    <label class="radio">`
+                    <label class="radio">
                         <input type="radio" name="marital" value="Married">
                         Married
                         <figure class="image is-128x128">
@@ -72,7 +72,7 @@
                 <label class="label">Education Qualification</label>
                 <div class="control container has-text-centered is-padding">
                     <div class="select">
-                        <select id="sel" name="education">
+                        <select id="sel" name="education" required>
                             <option value="0">High School Diploma</option>
                             <option value="1">Bachelor's Degree</option>
                             <option value="2">Master's Degree</option>
@@ -104,14 +104,14 @@
                     </label>
                 </div>
             </div>
-            <br><br><br>
+            <br>
 
             <!-- Monthly Salary -->
             <div class="field is-padding">
                 <label class="label">Monthly Salary</label>
                 <div class="control container has-text-centered is-padding">
                     <div class="select">
-                        <select name="salary">
+                        <select name="salary" required>
                             <option value=0> 0 - 5K</option>
                             <option value=1> 5K - 10K</option>
                             <option value=2> 10K - 30K</option>
@@ -130,7 +130,7 @@
                 <label class="label">Monthly Expenditure</label>
                 <div class="control container has-text-centered is-padding">
                     <div class="select">
-                        <select name="expenses">
+                        <select name="expenses" required>
                             <option value=1> 0 - 4K</option>
                             <option value=2> 4K - 8K</option>
                             <option value=3> 8K - 12K</option>
@@ -148,7 +148,7 @@
                 <label class="label">Monthly Savings</label>
                 <div class="control container has-text-centered is-padding">
                     <div class="select">
-                        <select name="savings">
+                        <select name="savings" required>
                             <option value=0> No Savings</option>
                             <option value=1> 0 - 1K</option>
                             <option value=2> 1K - 3K</option>
@@ -164,14 +164,14 @@
                 <label class="label">Plans for saving on</label>
                 <div class="control container has-text-centered is-padding">
                     <label class="radio">
-                        <input type="radio" name="goalname" value="Student Loan" onclick="showStudentElement();">
+                        <input type="radio" name="goalname" value="Student Loan" onclick="showStudentElement();" required>
                         Student Loan
                         <figure class="image is-128x128">
                             <img class="is-rounded" src="/static/images/university.png" alt="Student Loan"/>
                         </figure>
                     </label>
                     <label class="radio">
-                        <input type="radio" name="goalname" value="Personal Goal" onclick="showGoalElement();">
+                        <input type="radio" name="goalname" value="Personal Goal" onclick="showGoalElement();" required>
                         Personal Goal
                         <figure class="image is-128x128">
                             <img class="is-rounded" src="/static/images/trophy.png" alt="Personal Goal"/>
@@ -238,10 +238,10 @@
 
 
             <br/>
-            <div>
-                <button type="submit" id="signbutton" class="button is-info" onclick="refs.myModal.open()">Sign Up!
-                </button>
-            </div>
+
+<!--                <button type="submit" id="signbutton" class="button is-info" onclick="refs.myModal.open()">Sign Up!</button>-->
+                <button type="submit" id="signbutton" class="button is-info">Sign Up!</button>
+
         </form>
     </div>
 
@@ -271,6 +271,7 @@
             <!--        </div>-->
         </div>
     </div>
+</div>
 </body>
 
 
