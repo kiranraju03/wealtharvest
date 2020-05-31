@@ -47,20 +47,21 @@ def paymentsAjax():
         Transactions.email == user_email).filter(func.cast(Transactions.created_on, DATE) == datetime.date.today())
 
     # per_amt = transactionDetails.group_by(Transactions.email,
-    #                                       func.date(Transactions.created_on).label('day_wise')).order_by(
-    #     func.date(Transactions.created_on).desc()).all()
+    #     #                                   func.date(Transactions.created_on).label('day_wise')).order_by(
+    #     # func.date(Transactions.created_on).desc()).all()
 
     per_amt = transactionDetails.group_by(Transactions.email,
                                           func.cast(Transactions.created_on, DATE).label('day_wise')).order_by(
         func.cast(Transactions.created_on, DATE).desc()).all()
 
     print("Ordered")
+    print(per_amt)
     if len(per_amt) > 0:
         per_amt = per_amt[0]
     else:
         per_amt = (0, 0)
     print(per_amt)
-
+    print(pickedTupleValues[0])
     # Save per day - transaction_Amt total
     newSavePerDay = pickedTupleValues[0] - per_amt[0]
     if newSavePerDay <= 0:
@@ -83,11 +84,17 @@ def paymentsAjax():
     # Quantum as per goals set
     savePerTransaction = newSavePerDay / newTransactionValue
 
+    t1 = (2 * newAmountPerTransaction * savePerTransaction) / (newAmountPerTransaction + savePerTransaction)
+
+    t1b = (2 * t1 * computedAmount) / (t1 + computedAmount)
+
     # Harmonic Mean of 3 variables Calculation
-    finalQuantum = (3 * newAmountPerTransaction * computedAmount * savePerTransaction) / (
-                (newAmountPerTransaction * computedAmount) +
-                (computedAmount * savePerTransaction) +
-                (newAmountPerTransaction * savePerTransaction))
+    # finalQuantum = (3 * newAmountPerTransaction * computedAmount * savePerTransaction) / (
+    #             (newAmountPerTransaction * computedAmount) +
+    #             (computedAmount * savePerTransaction) +
+    #             (newAmountPerTransaction * savePerTransaction))
+
+    finalQuantum = min(computedAmount, t1b)
 
     data = {'message': 'Prediction Completed', 'code': 'SUCCESS', 'quantum': round(finalQuantum, 2)}
 

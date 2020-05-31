@@ -66,7 +66,7 @@ class Transactions(db.Model):
     __tablename__ = 'transactions'
     id = db.Column(db.Integer, primary_key=True)  # primary keys are required by SQLAlchemy
     email = db.Column(db.String(30))
-    transaction_amt = db.Column(db.Integer)
+    transaction_amt = db.Column(db.Float)
     created_on = db.Column(db.DateTime, server_default=db.func.now())
 
 
@@ -74,7 +74,7 @@ class Wallet(db.Model):
     __tablename__ = 'wallet'
     id = db.Column(db.Integer, primary_key=True)  # primary keys are required by SQLAlchemy
     email = db.Column(db.String(30))
-    transaction_amt = db.Column(db.Integer)
+    transaction_amt = db.Column(db.Float)
     created_on = db.Column(db.DateTime, server_default=db.func.now())
     # updated_on = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
